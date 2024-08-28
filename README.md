@@ -11,23 +11,23 @@ SmartNotes is a Django web application designed for managing notes efficiently. 
 ## Installation
 
 1. Clone the repository:
-```bash
+    ```bash
    git clone https://github.com/AlexzGut/django-smartnotes-app.git
 
-## Navigate to the project directory
-```bash
+2. Navigate to the project directory
+    ```bash
     cd django-smartnotes-app
 
-## Install dependecies
-```bash
+3. Install dependecies
+    ```bash
     pip install -r requirements.txt
 
-## Apply migrations
-```bash
+4. Apply migrations
+    ```bash
     python manage.py migrate
 
-## Run the development server
-```bash
+5. Run the development server
+    ```bash
     python manage.py runserver
 
 

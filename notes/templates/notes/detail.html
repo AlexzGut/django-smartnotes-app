@@ -1,0 +1,12 @@
+{% block title %}
+<title>Note Detail</title>
+{% endblock title %}
+
+{% block content %}
+<main>
+    <h1>{{ note.title }}</h1>
+    <p>{{ note.text }}</p>
+    <em>{{ note.created }}<em>
+    <a href="{% url 'notes:index' %}">Notes</a>
+</main>
+{% endblock content %}
