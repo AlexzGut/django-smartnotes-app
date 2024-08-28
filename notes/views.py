@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from .forms import NotesForm
 from .models import Notes
 
 # def index(request):
@@ -60,7 +61,7 @@ class CreateNoteView(CreateView):
     # When a POST request is made to notes/create a new Note is created in the database,
     # and the user is redirected to notes/ (notes:index)
     model = Notes
-    fields = ['title', 'text']
+    form_class = NotesForm
     # When a GET request is made to notes/create the user is displayed the notes/new.html template
     # to submit a new POST request to create a Note in the database
     # Used for GET requests to the url notes/create
