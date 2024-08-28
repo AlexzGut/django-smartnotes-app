@@ -1,11 +1,10 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
-from django.views.generic import ListView, DetailView
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from .models import Notes
-
-# Create your views here.
 
 # def index(request):
 #     note_list = Notes.objects.all()
@@ -41,3 +40,29 @@ class DetailView(DetailView):
     model = Notes
     context_object_name = 'note'
     template_name = 'notes/detail.html'
+
+
+# class NewView(TemplateView):
+#     template_name = 'notes/new.html'
+
+# def create(request):
+#     if ((title := request.POST['title'] == "") and (text := request.POST['text'] == "")):
+#         context = {
+#             'error_msg': 'all fields are required'
+#         }
+#         return render(request, 'notes/new.html', context)
+#     else:
+#         Notes.objects.create(title=title, text=text)
+#         return HttpResponseRedirect(reverse('notes:index'))
+    
+#Django generic CreateView class handles GET and POST requests made to the same url (notes/create)
+class CreateNoteView(CreateView):
+    # When a POST request is made to notes/create a new Note is created in the database,
+    # and the user is redirected to notes/ (notes:index)
+    model = Notes
+    fields = ['title', 'text']
+    # When a GET request is made to notes/create the user is displayed the notes/new.html template
+    # to submit a new POST request to create a Note in the database
+    # Used for GET requests to the url notes/create
+    template_name = 'notes/new.html' 
+    success_url = '/notes'
