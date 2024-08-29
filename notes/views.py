@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import NotesForm
 from .models import Notes
@@ -16,15 +17,17 @@ from .models import Notes
 
 # IndexView is a subclass of generic.ListView,
 # it is performing the same task as the index function() specified above.
-class IndexView(ListView):
+class IndexView(LoginRequiredMixin, ListView):
     # By default Django will look for a template called -> <app name>/<model name>_list.html
     # We are using the attribute template_name to override the template name Django should look for
     template_name = 'notes/index.html'
     context_object_name = 'notes'
+    login_url = '/admin'
 
     # Using type hint for code readability
     def get_queryset(self) -> QuerySet[Notes]:
-        return Notes.objects.all()
+        # get all the notes related to the current logged in user
+        return self.request.user.notes.all()
     
 # pk is the parameter url specified in urls.py
 # def detail(request, pk):
@@ -59,7 +62,7 @@ class DetailView(DetailView):
 #         return HttpResponseRedirect(reverse('notes:index'))
     
 #Django generic CreateView class handles GET and POST requests made to the same url (notes/create)
-class CreateNoteView(CreateView):
+class CreateNoteView(LoginRequiredMixin, CreateView):
     # When a POST request is made to notes/create a new Note is created in the database,
     # and the user is redirected to notes/ (notes:index)
     model = Notes
@@ -70,6 +73,19 @@ class CreateNoteView(CreateView):
     # Used for GET requests to the url notes/create
     template_name = 'notes/form.html' 
     success_url = '/notes'
+
+    def form_valid(self, form):
+        """
+        if the form is valid, add the current user to the note created, and
+        redirect to the supplied URL.
+        """
+        # self.object is the object being updated, save(commit=False) create, but do not save the new note instance
+        self.object = form.save(commit=False)
+        # self.request.user refers to the current logged in user
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class UpdateNoteView(UpdateView):
     model = Notes

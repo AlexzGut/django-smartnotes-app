@@ -12,5 +12,8 @@
             <li><a href="{% url 'notes:detail' note.id %}">{{ note.title | title }}</a></li>
         {% endfor %}
     </ul>
+    <div>
+        <a href="{% url 'notes:create' %}">Add a note</a>
+    </div>
 </main>
 {% endblock content %}
