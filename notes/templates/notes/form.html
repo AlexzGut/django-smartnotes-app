@@ -9,15 +9,17 @@
 
 {% block content %}
 <main>
-    <form action="{% url 'notes:create' %}" method="post">
+    {# the action attribute is not needed when using Django class forms because it's value is generated according to the action (Create, update) #}
+    <form method="post">
     {# Cross-Site Request Forgery #}
     {# comment Django uses a csrf token to know the POST request comes from a legit user #}
     {% csrf_token %}
         {{ form.as_p }}
         <div>
-            <input type="submit" value="Create">
+            <input type="submit" value="Submit">
         </div>
     </form>
+    <a href="{% url 'notes:index' %}">Cancel</a>
     {% if form.errors %}
     <div>
         {{ form.errors.title.as_text }}
