@@ -3,12 +3,9 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-<<<<<<< HEAD
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
-=======
-from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.views.generic.edit import DeleteView
->>>>>>> delete-endpoint
+
 from .forms import NotesForm
 from .models import Notes
 
