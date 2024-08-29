@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from django.views.generic.edit import DeleteView
 from .forms import NotesForm
 from .models import Notes
 
@@ -66,4 +67,9 @@ class CreateNoteView(CreateView):
     # to submit a new POST request to create a Note in the database
     # Used for GET requests to the url notes/create
     template_name = 'notes/new.html' 
+    success_url = '/notes'
+
+class DeleteNoteView(DeleteView):
+    model = Notes
+    template_name = 'notes/delete_confirmation_form.html'
     success_url = '/notes'

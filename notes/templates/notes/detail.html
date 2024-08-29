@@ -10,5 +10,6 @@
     <p>{{ note.text }}</p>
     <em>{{ note.created }}<em>
     <a href="{% url 'notes:index' %}">Notes</a>
+    <a href="{% url 'notes:delete' note.id %}">Delete</a>
 </main>
 {% endblock content %}
