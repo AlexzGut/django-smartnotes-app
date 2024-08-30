@@ -17,12 +17,14 @@ from .models import Notes
 
 # IndexView is a subclass of generic.ListView,
 # it is performing the same task as the index function() specified above.
+# To handle Login in a Class View we must use a mixin - LoginRequiredMixin,
+# it must be specified before the generic View in this case Template View
 class IndexView(LoginRequiredMixin, ListView):
     # By default Django will look for a template called -> <app name>/<model name>_list.html
     # We are using the attribute template_name to override the template name Django should look for
     template_name = 'notes/index.html'
     context_object_name = 'notes'
-    login_url = '/admin'
+    login_url = '/login'
 
     # Using type hint for code readability
     def get_queryset(self) -> QuerySet[Notes]:
@@ -73,6 +75,7 @@ class CreateNoteView(LoginRequiredMixin, CreateView):
     # Used for GET requests to the url notes/create
     template_name = 'notes/form.html' 
     success_url = '/notes'
+    login_url ='/login'
 
     def form_valid(self, form):
         """

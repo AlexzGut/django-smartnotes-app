@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 # from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
 from datetime import datetime
 
 # Create your views here.
@@ -14,12 +14,8 @@ class IndexView(TemplateView):
     template_name = 'home/index.html'
     extra_context = {'today': datetime.today()}
 
-# @login_required(login_url='/admin')
-# def authorized(request):
-#     return render(request, 'home/authorized.html', {})
+class LoginInterfaceView(LoginView):
+    template_name = 'home/login.html'
 
-# To handle Login in a Class View we must use a mixin - LoginRequiredMixin,
-# it must be specified before the generic View in this case Template View
-class AuthorizedView(LoginRequiredMixin, TemplateView):
-    template_name = 'home/authorized.html'
-    login_url = '/admin'
+class LogoutInterfaceView(LogoutView):
+    template_name = 'home/logout.html'

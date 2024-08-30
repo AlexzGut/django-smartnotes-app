@@ -5,5 +5,6 @@ from . import views
 ap_name = 'home' 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('authorized', views.AuthorizedView.as_view(), name='authorized'),
+    path('login', views.LoginInterfaceView.as_view(), name='login'),
+    path('logout', views.LogoutInterfaceView.as_view(), name='logout'),
 ]
