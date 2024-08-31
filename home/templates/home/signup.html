@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <style>
+    #id_usable_password {
+        display:none
+    }
+    </style>
+{% endblock  %}
+
+{% block title %}
+<title>SignUp</title>
+{% endblock  %}
+
+{% block content %}
+<main>
+    <form method="post">
+    {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" value="SignUp">
+    </form>
+</main>
+{% endblock  %}
